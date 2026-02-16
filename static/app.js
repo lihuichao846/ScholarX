@@ -235,6 +235,11 @@ function renderPapers(items) {
     
     card.querySelector(".card-abstract").textContent =
       paper.abstract || "暂无摘要信息";
+    
+    // 点击摘要展开/收起
+    card.querySelector(".card-abstract").onclick = function() {
+      this.classList.toggle("expanded");
+    };
       
     // 类别
     const categoriesDiv = card.querySelector(".categories");

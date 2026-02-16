@@ -499,6 +499,13 @@ body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  cursor: pointer; /* Add pointer cursor to indicate clickability */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.card-abstract.expanded {
+  -webkit-line-clamp: unset; /* Remove line clamp to show full text */
+  display: block; /* Switch to block to ensure full height */
 }
 
 .card-footer {
