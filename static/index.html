@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScholarX - 计算机科学前沿论文聚合</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="nav-left">
+        <div class="brand">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          ScholarX
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="search-wrapper">
+          <input type="text" id="queryInput" class="search-input" placeholder="搜索论文、作者、期刊..." />
+          <button id="refreshBtn" class="search-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout-container">
+      <!-- Left Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title">研究领域</div>
+          <div class="filter-group">
+            <div class="filter-item">
+               <label>分类筛选</label>
+               <select id="categorySelect" class="filter-control">
+                 <option value="">全部领域</option>
+               </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">筛选条件</div>
+          <div class="filter-group">
+            <div class="filter-item">
+              <label>发布时间 (按月)</label>
+              <input type="month" id="monthInput" class="filter-control" />
+            </div>
+            
+            <div class="filter-item">
+              <label>CCF 等级</label>
+              <select id="ccfSelect" class="filter-control">
+                <option value="">全部等级</option>
+                <option value="A">CCF A 类 (顶会/顶刊)</option>
+                <option value="B">CCF B 类</option>
+                <option value="C">CCF C 类</option>
+                <option value="None">无 CCF 分级 (其他)</option>
+              </select>
+            </div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="topTierCheckbox" />
+              仅显示顶刊/顶会
+            </label>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">数据来源</div>
+          <div class="checkbox-group" style="display: flex; flex-direction: column; gap: 8px;">
+            <label class="checkbox-label"><input type="checkbox" value="arxiv" checked class="source-checkbox" /> arXiv</label>
+            <label class="checkbox-label"><input type="checkbox" value="openalex" checked class="source-checkbox" /> OpenAlex</label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Daily Summary Section -->
+        <section id="dailySummarySection" class="daily-summary-container">
+          <!-- Content will be injected by JS -->
+          <div class="loading-summary">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </section>
+
+        <div class="content-header">
+          <div class="stats-info">
+            <h2 id="totalCount">搜索结果</h2>
+            <p id="statsText">使用上方搜索框查找论文</p>
+          </div>
+          <div class="sort-controls">
+            <select id="sortSelect" class="filter-control" style="width: auto;">
+              <option value="published_desc">最新发布</option>
+              <option value="published_asc">最早发布</option>
+              <option value="title_asc">标题 A-Z</option>
+            </select>
+          </div>
+        </div>
+
+    <!-- Search Results Modal -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-header-controls">
+                <!-- Moved sort controls here or keep them in main page? -->
+                <!-- The user just said show results in popup. The controls were in main page. -->
+                <!-- Ideally controls should be near results. -->
+            </div>
+            <div id="paperList" class="paper-grid">
+                <div class="empty-state">
+                    请输入关键词开始搜索
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="paperCardTemplate">
+      <article class="card">
+        <div class="card-header">
+          <span class="source-badge"></span>
+          <span class="ccf-container"></span>
+          <span class="date-text"></span>
+        </div>
+        <h3 class="card-title"></h3>
+        <div class="card-meta"></div>
+        <p class="card-abstract"></p>
+        <div class="card-footer">
+          <div class="tags categories"></div>
+          <a class="read-btn" target="_blank" rel="noopener">阅读原文 →</a>
+        </div>
+      </article>
+    </template>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
